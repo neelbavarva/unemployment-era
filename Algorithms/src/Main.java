@@ -149,8 +149,48 @@ public class Main {
     }
 
     public int findPages(int[] arr, int k) {
-        return -1;
+        if (k > arr.length) {
+            return - 1;
+        }
+
+        long left = 0;
+        long right = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+            left = Math.max(left, arr[i]);
+            right += arr[i];
+        }
+
+        long ans = -1;
+
+        while (left <= right) {
+            long mid = left + (right - left) / 2;
+            if (isAllocatedPagesValid(arr, mid, k)) {
+                ans = mid;
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+
+        return (int) ans;
     }
+
+    private boolean isAllocatedPagesValid(int[] arr, long maxPages, int k) {
+        int students = 1;
+        long counter = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+            counter += arr[i];
+            if (counter > maxPages) {
+                counter = arr[i];
+                students++;
+            }
+        }
+
+        return students <= k;
+    }
+
 
     public static void main(String args[]){
         System.out.println("Hi");
