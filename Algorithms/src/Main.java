@@ -1,5 +1,4 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Main {
 
@@ -263,6 +262,44 @@ public class Main {
         }
 
         return true;
+    }
+
+    public List<List<String>> groupAnagrams(String[] strs) {
+        List<List<String>> res = new ArrayList<>();
+        Map<Map<Character, Integer>, List<Integer>> map = new HashMap<>();
+
+        for(int i=0;i<strs.length;i++){
+            Map<Character, Integer> charMap = getStringToMap(strs[i]);
+            if(!map.containsKey(charMap)){
+                map.put(charMap, new ArrayList<>());
+            }
+            map.get(charMap).add(i);
+        }
+
+        for (Map.Entry<Map<Character, Integer>, List<Integer>> entry : map.entrySet()) {
+            List<Integer> value = entry.getValue();
+            List<String> resAdder = new ArrayList<>();
+            for(int i=0;i<value.size();i++){
+                resAdder.add(strs[value.get(i)]);
+            }
+            res.add(resAdder);
+        }
+
+        return res;
+    }
+
+    private Map<Character, Integer> getStringToMap(String str){
+        Map<Character, Integer> map = new HashMap<>();
+
+        for(int i=0;i<str.length();i++){
+            if(map.containsKey(str.charAt(i))){
+                map.put(str.charAt(i),map.get(str.charAt(i))+1);
+            } else {
+                map.put(str.charAt(i),1);
+            }
+        }
+
+        return map;
     }
 
     public static void main(String args[]){
