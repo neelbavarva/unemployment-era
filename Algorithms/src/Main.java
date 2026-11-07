@@ -1,6 +1,9 @@
+import java.io.*;
 import java.util.*;
 
 public class Main {
+
+    // DSA - Practice
 
     public int binarySearch(int arr[], int target){
         int left = 0;
@@ -325,7 +328,41 @@ public class Main {
         return longestSequence;
     }
 
-    public static void main(String args[]){
-        System.out.println("Hi");
+    public static void main(String[] args) throws IOException {
+        FastReader in = new FastReader();
+        PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
+
+        out.flush();
+        out.close();
+    }
+
+    static class FastReader {
+        private final BufferedReader br;
+        private StringTokenizer st;
+
+        FastReader() {
+            br = new BufferedReader(new InputStreamReader(System.in));
+        }
+
+        String next() throws IOException {
+            while (st == null || !st.hasMoreTokens()) {
+                st = new StringTokenizer(br.readLine());
+            }
+            return st.nextToken();
+        }
+
+        int nextInt() throws IOException { return Integer.parseInt(next()); }
+        long nextLong() throws IOException { return Long.parseLong(next()); }
+
+        int[] nextIntArray(int n) throws IOException {
+            int[] arr = new int[n];
+            for (int i = 0; i < n; i++) arr[i] = nextInt();
+            return arr;
+        }
+
+        String nextLine() throws IOException {
+            st = null;
+            return br.readLine();
+        }
     }
 }
