@@ -302,6 +302,29 @@ public class Main {
         return map;
     }
 
+    public int longestConsecutive(int[] nums) {
+        Map<Integer, Integer> map = new HashMap<>();
+        boolean visited[] = new boolean[nums.length];
+        for(int i=0;i<nums.length;i++){
+            map.put(nums[i], i);
+        }
+
+        int longestSequence = 0;
+        for(int i=0;i<nums.length;i++){
+            if(!visited[i] && !map.containsKey(nums[i]-1)){
+                int currentIndex = i;
+                int localMaxima = 1;
+                while(!visited[currentIndex] && map.containsKey(nums[currentIndex]+1)){
+                    localMaxima++;
+                    visited[currentIndex] = true;
+                    currentIndex = map.get(nums[currentIndex]+1);
+                }
+                longestSequence = Math.max(longestSequence, localMaxima);
+            }
+        }
+        return longestSequence;
+    }
+
     public static void main(String args[]){
         System.out.println("Hi");
     }
