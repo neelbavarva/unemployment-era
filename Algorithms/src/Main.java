@@ -3,6 +3,18 @@ import java.util.*;
 
 public class Main {
 
+    // ===== Common Methods & Classes ===== //
+
+    public class Pair<K, V> {
+        K first;
+        V second;
+
+        Pair(K first, V second) {
+            this.first = first;
+            this.second = second;
+        }
+    }
+
     // ===== Binary Search ===== //
 
     public int binarySearch(int arr[], int target){
@@ -446,6 +458,60 @@ public class Main {
         }
 
         return stack.isEmpty();
+    }
+
+    class StockSpanner {
+
+        static class Pair<K, V> {
+            K first;
+            V second;
+
+            Pair(K first, V second) {
+                this.first = first;
+                this.second = second;
+            }
+        }
+
+        Deque<Pair<Integer, Integer>> stack;
+        int count;
+
+        public StockSpanner() {
+            stack = new ArrayDeque<>();
+            count = 0;
+        }
+
+        public int next(int price) {
+            count++;
+            while (!stack.isEmpty() && stack.peek().first <= price) {
+                stack.pop();
+            }
+
+            int curr = 0;
+            if (!stack.isEmpty()) {
+                curr = stack.peek().second;
+            }
+
+            stack.push(new Pair(price, count));
+            return count - curr;
+        }
+    }
+
+    public int[] nextGreaterElements(int[] nums) {
+        int res[] = new int[nums.length];
+        Deque<Integer> stack = new ArrayDeque<>();
+
+        for (int i = nums.length - 1; i >= 0; i--) {
+            stack.push(nums[i]);
+        }
+
+        for (int i = nums.length - 1; i >= 0; i--) {
+            while (!stack.isEmpty() && stack.peek() <= nums[i]) {
+                stack.pop();
+            }
+            res[i] = stack.isEmpty() ? -1 : stack.peek();
+            stack.push(nums[i]);
+        }
+        return res;
     }
 
     public static void main(String[] args) throws IOException {
