@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Main {
 
-    // DSA - Practice
+    // ===== Binary Search ===== //
 
     public int binarySearch(int arr[], int target){
         int left = 0;
@@ -196,6 +196,8 @@ public class Main {
         return students <= k;
     }
 
+    // ===== HashMap ===== //
+
     public int[] twoSum(int[] nums, int target) {
         int res[] = new int[]{-1,-1};
 
@@ -378,6 +380,72 @@ public class Main {
             }
         }
         return res+1;
+    }
+
+    // ===== Stack ===== //
+
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        int res[] = new int[nums1.length];
+        int nextGreater[] = new int[nums2.length];
+
+        Map<Integer, Integer> map = new HashMap<>();
+        Deque<Integer> stack = new ArrayDeque<>();
+//      Stack<Integer> stack = new Stack<>();
+//      Stack is a legacy class, synchronised and slower
+//      ArrayDeque doesn’t allow null. That’s never an issue in DSA.
+
+        for(int i=nums2.length-1;i>=0;i--){
+            if(stack.isEmpty()){
+                nextGreater[i] = -1;
+            } else {
+                while(!stack.isEmpty() && stack.peek()<nums2[i]){
+                    stack.pop();
+                }
+                nextGreater[i] = stack.isEmpty() ? -1 : stack.peek();
+            }
+            map.put(nums2[i], nextGreater[i]);
+            stack.push(nums2[i]);
+        }
+
+        for(int i=0;i<nums1.length;i++){
+            res[i] = map.get(nums1[i]);
+        }
+        return res;
+    }
+
+    public boolean isValidParentheses(String s) {
+        Deque<Character> stack = new ArrayDeque<>();
+
+        for(int i=0;i<s.length();i++){
+            char curr = s.charAt(i);
+            if(stack.isEmpty()){
+                stack.push(curr);
+            } else {
+                if(curr==')'){
+                    if(stack.peek()=='('){
+                        stack.pop();
+                    } else {
+                        return false;
+                    }
+                } else if(curr==']'){
+                    if(stack.peek()=='['){
+                        stack.pop();
+                    } else {
+                        return false;
+                    }
+                } else if (curr=='}') {
+                    if(stack.peek()=='{'){
+                        stack.pop();
+                    } else {
+                        return false;
+                    }
+                } else {
+                    stack.push(curr);
+                }
+            }
+        }
+
+        return stack.isEmpty();
     }
 
     public static void main(String[] args) throws IOException {
