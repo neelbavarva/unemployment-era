@@ -328,6 +328,58 @@ public class Main {
         return longestSequence;
     }
 
+    public int fourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4) {
+        Map<Integer, Integer> map = new HashMap<>();
+        int res = 0;
+        for(int i=0;i<nums1.length;i++){
+            for(int j=0;j<nums2.length;j++){
+                if(!map.containsKey(nums1[i]+nums2[j])){
+                    map.put(nums1[i]+nums2[j], 0);
+                }
+                map.put(nums1[i]+nums2[j], map.get(nums1[i]+nums2[j])+1);
+            }
+        }
+
+        for(int i=0;i<nums3.length;i++){
+            for(int j=0;j<nums4.length;j++){
+                if(map.containsKey((nums3[i]+nums4[j])*(-1))){
+                    res += map.get((nums3[i]+nums4[j])*(-1));
+                }
+            }
+        }
+        return res;
+    }
+
+    public int maxPoints(int[][] points) {
+        int res = 0;
+
+        for(int i=0;i<points.length;i++){
+            Map<Double, Integer> map = new HashMap<>();
+            for(int j=i+1;j<points.length;j++){
+                double yAxis = points[j][1] - points[i][1];
+                double xAxis = points[j][0] - points[i][0];
+                if(xAxis==0){
+                    if(!map.containsKey((double)Integer.MAX_VALUE)){
+                        map.put((double) Integer.MAX_VALUE, 0);
+                    }
+                    map.put((double) Integer.MAX_VALUE, map.get((double)Integer.MAX_VALUE)+1);
+                    res = Math.max(res, map.get((double)Integer.MAX_VALUE));
+                } else {
+                    double slop = yAxis/xAxis;
+                    if(slop==0.0 || slop==-0.0){
+                        slop=0.0; // IEEE 754 floating-point standard
+                    }
+                    if(!map.containsKey(slop)){
+                        map.put(slop, 0);
+                    }
+                    map.put(slop, map.get(slop)+1);
+                    res = Math.max(res, map.get(slop));
+                }
+            }
+        }
+        return res+1;
+    }
+
     public static void main(String[] args) throws IOException {
         FastReader in = new FastReader();
         PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
