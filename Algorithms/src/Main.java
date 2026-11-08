@@ -514,6 +514,72 @@ public class Main {
         return res;
     }
 
+    public int[] asteroidCollision(int[] asteroids) {
+        Deque<Integer> stack = new ArrayDeque<>();
+
+        for (int i = 0; i < asteroids.length; i++) {
+            if (asteroids[i] < 0) {
+                boolean destroyed = false;
+                while (!stack.isEmpty() && stack.peek() > 0) {
+                    if (Math.abs(asteroids[i]) > stack.peek()) {
+                        stack.pop();
+                    } else if (Math.abs(asteroids[i]) == stack.peek()) {
+                        stack.pop();
+                        destroyed = true;
+                        break;
+                    } else {
+                        destroyed = true;
+                        break;
+                    }
+                }
+                if (!destroyed) {
+                    stack.push(asteroids[i]);
+                }
+            } else {
+                stack.push(asteroids[i]);
+            }
+        }
+
+        int res[] = new int[stack.size()];
+        int index = stack.size() - 1;
+        while (!stack.isEmpty()) {
+            res[index--] = stack.pop();
+        }
+        return res;
+    }
+
+    public int largestRectangleArea(int[] heights) {
+        int res = 0;
+        int[] leftmax = new int[heights.length];
+        int[] rightmax = new int[heights.length];
+
+        Deque<Integer> stack = new ArrayDeque<>();
+
+        // left max
+        for (int i = 0; i < heights.length; i++) {
+            while (!stack.isEmpty() && heights[stack.peek()] >= heights[i]) {
+                stack.pop();
+            }
+            leftmax[i] = stack.isEmpty() ? i : i - stack.peek() - 1;
+            stack.push(i);
+        }
+        stack.clear();
+
+        // right max
+        for (int i = heights.length - 1; i >= 0; i--) {
+            while (!stack.isEmpty() && heights[stack.peek()] >= heights[i]) {
+                stack.pop();
+            }
+            rightmax[i] = stack.isEmpty() ? heights.length - 1 - i : stack.peek() - i - 1;
+            stack.push(i);
+        }
+
+        for (int i = 0; i < leftmax.length; i++) {
+            res = Math.max(res, (rightmax[i] + leftmax[i] + 1) * heights[i]);
+        }
+        return res;
+    }
+
     public static void main(String[] args) throws IOException {
         FastReader in = new FastReader();
         PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
