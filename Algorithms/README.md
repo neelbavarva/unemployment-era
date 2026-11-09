@@ -1,9 +1,3 @@
-# DSA Prep
-
-Interview preparation for SDE-2: a topic-wise question plan, ordered so that no topic depends on one that hasn't been covered yet.
-
----
-
 ## Phase 1: Linear Data Structures
 
 ### 1. Binary Search
@@ -251,13 +245,3 @@ Interview preparation for SDE-2: a topic-wise question plan, ordered so that no 
 - Single Number II
 - Single Number III
 - Sum of Two Integers
-
----
-
-## Java / Implementation (later)
-- Java HashMap Internals
-- Min Stack (Stack implementation)
-- Design Linked List (singly + doubly, from scratch)
-
-## SQL (parallel track)
-- LeetCode SQL 50 study plan
