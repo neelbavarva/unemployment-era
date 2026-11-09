@@ -580,6 +580,82 @@ public class Main {
         return res;
     }
 
+    public int maximalRectangle(char[][] matrix) {
+        int maxArea = 0;
+        int[] heights = new int[matrix[0].length];
+
+        for(int i=0;i<matrix.length;i++){
+            for(int j=0;j<matrix[i].length;j++){
+                if(matrix[i][j]=='1'){
+                    heights[j]++;
+                } else {
+                    heights[j] = 0;
+                }
+            }
+            maxArea = Math.max(maxArea, largestRectangleArea(heights));
+        }
+
+        return maxArea;
+    }
+
+    public int trappingRainWater(int[] heights) {
+        int total = 0;
+        int[] leftmax = new int[heights.length];
+        int[] rightmax = new int[heights.length];
+        Deque<Integer> stack = new ArrayDeque<>();
+
+        for (int i = 0; i < heights.length; i++) {
+            while (!stack.isEmpty() && heights[stack.peek()] <= heights[i]) {
+                stack.pop();
+            }
+            leftmax[i] = stack.isEmpty() ? -1 : stack.peek();
+            if (stack.isEmpty()) {
+                stack.push(i);
+            }
+        }
+        stack.clear();
+
+        for (int i = heights.length - 1; i >= 0; i--) {
+            while (!stack.isEmpty() && heights[stack.peek()] <= heights[i]) {
+                stack.pop();
+            }
+            rightmax[i] = stack.isEmpty() ? -1 : stack.peek();
+            if (stack.isEmpty()) {
+                stack.push(i);
+            }
+        }
+
+        for (int i = 0; i < rightmax.length; i++) {
+            if (leftmax[i] != -1 && rightmax[i] != -1) {
+                total += (Math.min(heights[leftmax[i]], heights[rightmax[i]]) - heights[i]);
+            }
+        }
+        return total;
+    }
+
+    public int trappingRainWaterWithoutStack(int[] heights) {
+        int total = 0;
+        int[] leftmax = new int[heights.length];
+        int[] rightmax = new int[heights.length];
+
+        leftmax[0] = heights[0];
+        for (int i = 1; i < heights.length; i++) {
+            leftmax[i] = Math.max(leftmax[i - 1], heights[i]);
+        }
+
+        rightmax[heights.length - 1] = heights[heights.length - 1];
+        for (int i = heights.length - 2; i >= 0; i--) {
+            rightmax[i] = Math.max(rightmax[i + 1], heights[i]);
+        }
+
+        for (int i = 0; i < rightmax.length; i++) {
+            if (leftmax[i] != -1 && rightmax[i] != -1) {
+                total += Math.min(leftmax[i], rightmax[i]) - heights[i];
+            }
+        }
+        return total;
+    }
+
     public static void main(String[] args) throws IOException {
         FastReader in = new FastReader();
         PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
