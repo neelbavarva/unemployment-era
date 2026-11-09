@@ -656,6 +656,32 @@ public class Main {
         return total;
     }
 
+    public String removeKdigits(String num, int k) {
+        String res = "";
+        Deque<Integer> stack = new ArrayDeque<>();
+
+        for (int i = 0; i < num.length(); i++) {
+            while (!stack.isEmpty() && Integer.parseInt(num.charAt(i) + "") < stack.peek() && k > 0) {
+                stack.pop();
+                k--;
+            }
+            stack.push(Integer.parseInt(num.charAt(i) + ""));
+        }
+
+        while (k-- > 0) {
+            stack.pop();
+        }
+        while (!stack.isEmpty()) {
+            res += stack.pop();
+        }
+
+        res = new StringBuilder(res).reverse().toString();
+        res = res.replaceFirst("^0+", "");
+        return res.isEmpty() ? "0" : res;
+    }
+
+    // ===== Sliding Window ===== //
+
     public static void main(String[] args) throws IOException {
         FastReader in = new FastReader();
         PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
