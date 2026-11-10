@@ -17,6 +17,7 @@ public class Main {
 
     // ===== Binary Search ===== //
 
+    // Binary Search
     public int binarySearch(int arr[], int target){
         int left = 0;
         int right = arr.length-1;
@@ -35,6 +36,7 @@ public class Main {
         return -1;
     }
 
+    // First and Last Position of Element in Sorted Array
     public int[] getFirstAndLastOccurence(int[] nums, int target) {
         int left = 0;
         int right = nums.length-1;
@@ -75,6 +77,7 @@ public class Main {
         return new int[]{firstOcc, lastOcc};
     }
 
+    // Find K Rotation
     public int findKRotation(int arr[]) {
         if(arr.length==1){
             return 0;
@@ -100,7 +103,8 @@ public class Main {
         }
         return ans;
     }
-    
+
+    // Find K Rotation
     public int findKRotationSimplified(int arr[]) {
         int left = 0;
         int right = arr.length - 1;
@@ -117,6 +121,7 @@ public class Main {
         return left;
     }
 
+    // Find Peak Element
     public int findPeakElement(int[] nums) {
         if(nums.length==1){
             return 0;
@@ -140,6 +145,7 @@ public class Main {
         return ans;
     }
 
+    // Search a 2D Matrix
     public boolean searchMatrix(int[][] matrix, int target) {
         int width = matrix[0].length;
         int height = matrix.length;
@@ -165,6 +171,7 @@ public class Main {
         return false;
     }
 
+    // Book Allocation
     public int findPages(int[] arr, int k) {
         if (k > arr.length) {
             return - 1;
@@ -210,6 +217,7 @@ public class Main {
 
     // ===== HashMap ===== //
 
+    // Two Sum
     public int[] twoSum(int[] nums, int target) {
         int res[] = new int[]{-1,-1};
 
@@ -228,6 +236,7 @@ public class Main {
         return res;
     }
 
+    // Valid Anagram
     public boolean isAnagram(String s, String t) {
         if(s.length()!=t.length()){
             return false;
@@ -258,6 +267,7 @@ public class Main {
         return true;
     }
 
+    // Isomorphic Strings
     public boolean isIsomorphic(String s, String t) {
         return isIsomorphicCheck(s,t) && isIsomorphicCheck(t,s);
     }
@@ -281,6 +291,7 @@ public class Main {
         return true;
     }
 
+    // Group Anagrams
     public List<List<String>> groupAnagrams(String[] strs) {
         List<List<String>> res = new ArrayList<>();
         Map<Map<Character, Integer>, List<Integer>> map = new HashMap<>();
@@ -319,6 +330,7 @@ public class Main {
         return map;
     }
 
+    // Longest Consecutive Sequence
     public int longestConsecutive(int[] nums) {
         Map<Integer, Integer> map = new HashMap<>();
         boolean visited[] = new boolean[nums.length];
@@ -342,6 +354,7 @@ public class Main {
         return longestSequence;
     }
 
+    // 4Sum II
     public int fourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4) {
         Map<Integer, Integer> map = new HashMap<>();
         int res = 0;
@@ -364,6 +377,7 @@ public class Main {
         return res;
     }
 
+    // Max Points on a Line
     public int maxPoints(int[][] points) {
         int res = 0;
 
@@ -396,6 +410,7 @@ public class Main {
 
     // ===== Stack ===== //
 
+    // Next Greater Element
     public int[] nextGreaterElement(int[] nums1, int[] nums2) {
         int res[] = new int[nums1.length];
         int nextGreater[] = new int[nums2.length];
@@ -425,6 +440,7 @@ public class Main {
         return res;
     }
 
+    // Valid Parentheses
     public boolean isValidParentheses(String s) {
         Deque<Character> stack = new ArrayDeque<>();
 
@@ -460,6 +476,7 @@ public class Main {
         return stack.isEmpty();
     }
 
+    // Online Stock Span
     class StockSpanner {
 
         static class Pair<K, V> {
@@ -496,6 +513,7 @@ public class Main {
         }
     }
 
+    // Next Greater Element II
     public int[] nextGreaterElements(int[] nums) {
         int res[] = new int[nums.length];
         Deque<Integer> stack = new ArrayDeque<>();
@@ -514,6 +532,7 @@ public class Main {
         return res;
     }
 
+    // Asteroid Collision
     public int[] asteroidCollision(int[] asteroids) {
         Deque<Integer> stack = new ArrayDeque<>();
 
@@ -548,6 +567,7 @@ public class Main {
         return res;
     }
 
+    // Largest Rectangle in Histogram
     public int largestRectangleArea(int[] heights) {
         int res = 0;
         int[] leftmax = new int[heights.length];
@@ -580,6 +600,7 @@ public class Main {
         return res;
     }
 
+    // Maximal Rectangle
     public int maximalRectangle(char[][] matrix) {
         int maxArea = 0;
         int[] heights = new int[matrix[0].length];
@@ -598,6 +619,7 @@ public class Main {
         return maxArea;
     }
 
+    // Trapping Rain Water
     public int trappingRainWater(int[] heights) {
         int total = 0;
         int[] leftmax = new int[heights.length];
@@ -633,6 +655,7 @@ public class Main {
         return total;
     }
 
+    // Trapping Rain Water
     public int trappingRainWaterWithoutStack(int[] heights) {
         int total = 0;
         int[] leftmax = new int[heights.length];
@@ -656,6 +679,7 @@ public class Main {
         return total;
     }
 
+    // Remove K Digits
     public String removeKdigits(String num, int k) {
         String res = "";
         Deque<Integer> stack = new ArrayDeque<>();
@@ -680,8 +704,13 @@ public class Main {
         return res.isEmpty() ? "0" : res;
     }
 
+    // Decode String
+
+    // Sum of Subarray Minimums
+
     // ===== Sliding Window ===== //
 
+    // First Negative Number in Every Window of Size K
     public List<Integer> firstNegInt(int arr[], int k) {
         List<Integer> res = new ArrayList<>();
         Queue<Integer> queue = new ArrayDeque<>();
@@ -708,6 +737,7 @@ public class Main {
         return res;
     }
 
+    // Count Occurrences of Anagrams
     public int countOccurencesOfAnagrams(String pat, String txt) {
         int res = 0;
         Map<Character, Integer> map1 = new HashMap<>();
@@ -754,6 +784,7 @@ public class Main {
         return res;
     }
 
+    // Count Occurrences of Anagrams
     public int countOccurencesOfAnagramsSimplified(String pat, String txt) {
         int res = 0;
         Map<Character, Integer> map1 = new HashMap<>();
@@ -786,6 +817,7 @@ public class Main {
         return res;
     }
 
+    // Minimum Size Subarray Sum
     public int minSubArrayLen(int target, int[] nums) {
         int min = nums.length + 1;
 
@@ -808,6 +840,7 @@ public class Main {
         return min == nums.length + 1 ? 0 : min;
     }
 
+    // Longest Substring Without Repeating Characters
     public int lengthOfLongestSubstring(String s) {
         int max = 0;
         int i = 0;
@@ -829,6 +862,8 @@ public class Main {
         }
         return max;
     }
+
+    // Longest Substring with K Unique Characters
 
     public static void main(String[] args) throws IOException {
         FastReader in = new FastReader();
