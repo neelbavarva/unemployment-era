@@ -786,6 +786,50 @@ public class Main {
         return res;
     }
 
+    public int minSubArrayLen(int target, int[] nums) {
+        int min = nums.length + 1;
+
+        int i = 0;
+        int j = 0;
+        int curr = 0;
+
+        while (j < nums.length) {
+            while (curr < target && j < nums.length) {
+                curr += nums[j];
+                j++; // the early increment
+            }
+
+            while (curr >= target) {
+                min = Math.min(min, j - i); // We got the increment earlier so no need for -1;
+                curr -= nums[i];
+                i++;
+            }
+        }
+        return min == nums.length + 1 ? 0 : min;
+    }
+
+    public int lengthOfLongestSubstring(String s) {
+        int max = 0;
+        int i = 0;
+        int j = 0;
+        Map<Character, Integer> map = new HashMap<>();
+
+        while (j < s.length()) {
+            if (map.containsKey(s.charAt(j))) {
+                map.put(s.charAt(i), map.get(s.charAt(i)) - 1);
+                if (map.get(s.charAt(i)) == 0) {
+                    map.remove(s.charAt(i));
+                }
+                i++;
+            } else {
+                map.put(s.charAt(j), 1);
+                j++;
+                max = Math.max(max, j - i);
+            }
+        }
+        return max;
+    }
+
     public static void main(String[] args) throws IOException {
         FastReader in = new FastReader();
         PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
