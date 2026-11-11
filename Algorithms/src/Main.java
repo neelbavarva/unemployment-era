@@ -18,18 +18,18 @@ public class Main {
     // ===== Binary Search ===== //
 
     // Binary Search
-    public int binarySearch(int arr[], int target){
+    public int binarySearch(int arr[], int target) {
         int left = 0;
-        int right = arr.length-1;
+        int right = arr.length - 1;
 
-        while(left<=right){
-            int mid = left + (right-left)/2;
-            if(arr[mid]==target){
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (arr[mid] == target) {
                 return mid;
-            } else if(arr[mid]<target){
-                left = mid+1;
+            } else if (arr[mid] < target) {
+                left = mid + 1;
             } else {
-                right = mid-1;
+                right = mid - 1;
             }
         }
 
@@ -39,39 +39,39 @@ public class Main {
     // First and Last Position of Element in Sorted Array
     public int[] getFirstAndLastOccurence(int[] nums, int target) {
         int left = 0;
-        int right = nums.length-1;
+        int right = nums.length - 1;
         int firstOcc = Integer.MAX_VALUE;
         int lastOcc = -1;
 
         // First occurence
-        while(left<=right){
-            int mid = left + (right-left)/2;
-            if(nums[mid]==target){
-                right = mid-1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] == target) {
+                right = mid - 1;
                 firstOcc = Math.min(firstOcc, mid);
-            } else if(nums[mid]<target){
-                left = mid+1;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
             } else {
-                right = mid-1;
+                right = mid - 1;
             }
         }
 
         left = 0;
-        right = nums.length-1;
+        right = nums.length - 1;
         // Last occurence
-        while(left<=right){
-            int mid = left + (right-left)/2;
-            if(nums[mid]==target){
-                left = mid+1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] == target) {
+                left = mid + 1;
                 lastOcc = Math.max(lastOcc, mid);
-            } else if(nums[mid]<target){
-                left = mid+1;
+            } else if (nums[mid] < target) {
+                left = mid + 1;
             } else {
-                right = mid-1;
+                right = mid - 1;
             }
         }
 
-        if(firstOcc==Integer.MAX_VALUE){
+        if (firstOcc == Integer.MAX_VALUE) {
             firstOcc = -1;
         }
         return new int[]{firstOcc, lastOcc};
@@ -79,22 +79,22 @@ public class Main {
 
     // Find K Rotation
     public int findKRotation(int arr[]) {
-        if(arr.length==1){
+        if (arr.length == 1) {
             return 0;
         }
         int left = 0;
         int right = arr.length - 1;
         int ans = 0;
         while (left <= right) {
-            int mid = left + (right - left)/2;
+            int mid = left + (right - left) / 2;
             // Lesser than both it's left & right
             if (
-                    (mid - 1 >= 0 && mid + 1 <= arr.length - 1 && arr[mid]<arr[mid - 1] && arr[mid]<arr[mid + 1]) ||
-                    (mid == arr.length - 1 && arr[mid]<arr[mid - 1] && arr[mid]<arr[0])
+                    (mid - 1 >= 0 && mid + 1 <= arr.length - 1 && arr[mid] < arr[mid - 1] && arr[mid] < arr[mid + 1]) ||
+                            (mid == arr.length - 1 && arr[mid] < arr[mid - 1] && arr[mid] < arr[0])
             ) {
                 ans = mid;
                 break;
-            } else if (arr[0]>arr[arr.length - 1] && arr[mid]< arr[0]) {
+            } else if (arr[0] > arr[arr.length - 1] && arr[mid] < arr[0]) {
                 right = mid - 1;
             } else {
                 left = mid + 1;
@@ -109,10 +109,10 @@ public class Main {
         int left = 0;
         int right = arr.length - 1;
 
-        while(left<right){
-            int mid = left + (right - left)/2;
-            if(arr[mid]>arr[right]){
-                left = mid+1;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (arr[mid] > arr[right]) {
+                left = mid + 1;
             } else {
                 right = mid; // because of the EXACT pivot
             }
@@ -123,19 +123,19 @@ public class Main {
 
     // Find Peak Element
     public int findPeakElement(int[] nums) {
-        if(nums.length==1){
+        if (nums.length == 1) {
             return 0;
         }
         int left = 0;
         int right = nums.length - 1;
         int ans = 0;
         while (left <= right) {
-            int mid = left + (right - left)/2;
+            int mid = left + (right - left) / 2;
             // Greater than both it's left & right
-            if ((mid - 1 >= 0 && mid + 1 <= nums.length - 1 && nums[mid]>nums[mid - 1] && nums[mid]>nums[mid + 1]) || (mid==nums.length-1 && nums[mid]>nums[mid-1]) || (mid==0 && nums[mid]>nums[mid+1])){
+            if ((mid - 1 >= 0 && mid + 1 <= nums.length - 1 && nums[mid] > nums[mid - 1] && nums[mid] > nums[mid + 1]) || (mid == nums.length - 1 && nums[mid] > nums[mid - 1]) || (mid == 0 && nums[mid] > nums[mid + 1])) {
                 ans = mid;
                 break;
-            } else if (nums[mid]<nums[mid+1]) {
+            } else if (nums[mid] < nums[mid + 1]) {
                 left = mid + 1;
             } else {
                 right = mid - 1;
@@ -151,20 +151,20 @@ public class Main {
         int height = matrix.length;
 
         int left = 0;
-        int right = width*height-1;
-        int length = width*height;
+        int right = width * height - 1;
+        int length = width * height;
 
-        while(left<=right){
-            int mid = left + (right-left)/2;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
             int i = mid / width;
             int j = mid % width;
 
-            if(matrix[i][j]==target){
+            if (matrix[i][j] == target) {
                 return true;
-            } else if(matrix[i][j]>target){
-                right = mid-1;
+            } else if (matrix[i][j] > target) {
+                right = mid - 1;
             } else {
-                left = mid+1;
+                left = mid + 1;
             }
         }
 
@@ -174,7 +174,7 @@ public class Main {
     // Book Allocation
     public int findPages(int[] arr, int k) {
         if (k > arr.length) {
-            return - 1;
+            return -1;
         }
 
         long left = 0;
@@ -219,13 +219,13 @@ public class Main {
 
     // Two Sum
     public int[] twoSum(int[] nums, int target) {
-        int res[] = new int[]{-1,-1};
+        int res[] = new int[]{-1, -1};
 
         Map<Integer, Integer> map = new HashMap<>();
 
-        for(int i=0;i<nums.length;i++){
-            if(map.containsKey(target-nums[i])){
-                res[0] = map.get(target-nums[i]);
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(target - nums[i])) {
+                res[0] = map.get(target - nums[i]);
                 res[1] = i;
                 break;
             } else {
@@ -238,29 +238,29 @@ public class Main {
 
     // Valid Anagram
     public boolean isAnagram(String s, String t) {
-        if(s.length()!=t.length()){
+        if (s.length() != t.length()) {
             return false;
         }
 
         Map<Character, Integer> map1 = new HashMap<>();
-        for(int i=0;i<s.length();i++){
-            if(map1.containsKey(s.charAt(i))){
-                map1.put(s.charAt(i), map1.get(s.charAt(i))+1);
+        for (int i = 0; i < s.length(); i++) {
+            if (map1.containsKey(s.charAt(i))) {
+                map1.put(s.charAt(i), map1.get(s.charAt(i)) + 1);
             } else {
                 map1.put(s.charAt(i), 1);
             }
         }
 
         Map<Character, Integer> map2 = new HashMap<>();
-        for(int i=0;i<t.length();i++){
-            if(map2.containsKey(t.charAt(i))){
-                map2.put(t.charAt(i), map2.get(t.charAt(i))+1);
+        for (int i = 0; i < t.length(); i++) {
+            if (map2.containsKey(t.charAt(i))) {
+                map2.put(t.charAt(i), map2.get(t.charAt(i)) + 1);
             } else {
                 map2.put(t.charAt(i), 1);
             }
         }
 
-        if(!map1.equals(map2)){
+        if (!map1.equals(map2)) {
             return false;
         }
 
@@ -269,20 +269,20 @@ public class Main {
 
     // Isomorphic Strings
     public boolean isIsomorphic(String s, String t) {
-        return isIsomorphicCheck(s,t) && isIsomorphicCheck(t,s);
+        return isIsomorphicCheck(s, t) && isIsomorphicCheck(t, s);
     }
 
     private boolean isIsomorphicCheck(String s, String t) {
-        if(s.length()!=t.length()){
+        if (s.length() != t.length()) {
             return false;
         }
 
         Map<Character, Character> map = new HashMap<>();
-        for(int i=0;i<s.length();i++){
-            if(!map.containsKey(s.charAt(i))){
+        for (int i = 0; i < s.length(); i++) {
+            if (!map.containsKey(s.charAt(i))) {
                 map.put(s.charAt(i), t.charAt(i));
             } else {
-                if(!(map.get(s.charAt(i))==t.charAt(i))){
+                if (!(map.get(s.charAt(i)) == t.charAt(i))) {
                     return false;
                 }
             }
@@ -296,9 +296,9 @@ public class Main {
         List<List<String>> res = new ArrayList<>();
         Map<Map<Character, Integer>, List<Integer>> map = new HashMap<>();
 
-        for(int i=0;i<strs.length;i++){
+        for (int i = 0; i < strs.length; i++) {
             Map<Character, Integer> charMap = getStringToMap(strs[i]);
-            if(!map.containsKey(charMap)){
+            if (!map.containsKey(charMap)) {
                 map.put(charMap, new ArrayList<>());
             }
             map.get(charMap).add(i);
@@ -307,7 +307,7 @@ public class Main {
         for (Map.Entry<Map<Character, Integer>, List<Integer>> entry : map.entrySet()) {
             List<Integer> value = entry.getValue();
             List<String> resAdder = new ArrayList<>();
-            for(int i=0;i<value.size();i++){
+            for (int i = 0; i < value.size(); i++) {
                 resAdder.add(strs[value.get(i)]);
             }
             res.add(resAdder);
@@ -316,14 +316,14 @@ public class Main {
         return res;
     }
 
-    private Map<Character, Integer> getStringToMap(String str){
+    private Map<Character, Integer> getStringToMap(String str) {
         Map<Character, Integer> map = new HashMap<>();
 
-        for(int i=0;i<str.length();i++){
-            if(map.containsKey(str.charAt(i))){
-                map.put(str.charAt(i),map.get(str.charAt(i))+1);
+        for (int i = 0; i < str.length(); i++) {
+            if (map.containsKey(str.charAt(i))) {
+                map.put(str.charAt(i), map.get(str.charAt(i)) + 1);
             } else {
-                map.put(str.charAt(i),1);
+                map.put(str.charAt(i), 1);
             }
         }
 
@@ -334,19 +334,19 @@ public class Main {
     public int longestConsecutive(int[] nums) {
         Map<Integer, Integer> map = new HashMap<>();
         boolean visited[] = new boolean[nums.length];
-        for(int i=0;i<nums.length;i++){
+        for (int i = 0; i < nums.length; i++) {
             map.put(nums[i], i);
         }
 
         int longestSequence = 0;
-        for(int i=0;i<nums.length;i++){
-            if(!visited[i] && !map.containsKey(nums[i]-1)){
+        for (int i = 0; i < nums.length; i++) {
+            if (!visited[i] && !map.containsKey(nums[i] - 1)) {
                 int currentIndex = i;
                 int localMaxima = 1;
-                while(!visited[currentIndex] && map.containsKey(nums[currentIndex]+1)){
+                while (!visited[currentIndex] && map.containsKey(nums[currentIndex] + 1)) {
                     localMaxima++;
                     visited[currentIndex] = true;
-                    currentIndex = map.get(nums[currentIndex]+1);
+                    currentIndex = map.get(nums[currentIndex] + 1);
                 }
                 longestSequence = Math.max(longestSequence, localMaxima);
             }
@@ -358,19 +358,19 @@ public class Main {
     public int fourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4) {
         Map<Integer, Integer> map = new HashMap<>();
         int res = 0;
-        for(int i=0;i<nums1.length;i++){
-            for(int j=0;j<nums2.length;j++){
-                if(!map.containsKey(nums1[i]+nums2[j])){
-                    map.put(nums1[i]+nums2[j], 0);
+        for (int i = 0; i < nums1.length; i++) {
+            for (int j = 0; j < nums2.length; j++) {
+                if (!map.containsKey(nums1[i] + nums2[j])) {
+                    map.put(nums1[i] + nums2[j], 0);
                 }
-                map.put(nums1[i]+nums2[j], map.get(nums1[i]+nums2[j])+1);
+                map.put(nums1[i] + nums2[j], map.get(nums1[i] + nums2[j]) + 1);
             }
         }
 
-        for(int i=0;i<nums3.length;i++){
-            for(int j=0;j<nums4.length;j++){
-                if(map.containsKey((nums3[i]+nums4[j])*(-1))){
-                    res += map.get((nums3[i]+nums4[j])*(-1));
+        for (int i = 0; i < nums3.length; i++) {
+            for (int j = 0; j < nums4.length; j++) {
+                if (map.containsKey((nums3[i] + nums4[j]) * (-1))) {
+                    res += map.get((nums3[i] + nums4[j]) * (-1));
                 }
             }
         }
@@ -381,31 +381,31 @@ public class Main {
     public int maxPoints(int[][] points) {
         int res = 0;
 
-        for(int i=0;i<points.length;i++){
+        for (int i = 0; i < points.length; i++) {
             Map<Double, Integer> map = new HashMap<>();
-            for(int j=i+1;j<points.length;j++){
+            for (int j = i + 1; j < points.length; j++) {
                 double yAxis = points[j][1] - points[i][1];
                 double xAxis = points[j][0] - points[i][0];
-                if(xAxis==0){
-                    if(!map.containsKey((double)Integer.MAX_VALUE)){
+                if (xAxis == 0) {
+                    if (!map.containsKey((double) Integer.MAX_VALUE)) {
                         map.put((double) Integer.MAX_VALUE, 0);
                     }
-                    map.put((double) Integer.MAX_VALUE, map.get((double)Integer.MAX_VALUE)+1);
-                    res = Math.max(res, map.get((double)Integer.MAX_VALUE));
+                    map.put((double) Integer.MAX_VALUE, map.get((double) Integer.MAX_VALUE) + 1);
+                    res = Math.max(res, map.get((double) Integer.MAX_VALUE));
                 } else {
-                    double slop = yAxis/xAxis;
-                    if(slop==0.0 || slop==-0.0){
-                        slop=0.0; // IEEE 754 floating-point standard
+                    double slop = yAxis / xAxis;
+                    if (slop == 0.0 || slop == -0.0) {
+                        slop = 0.0; // IEEE 754 floating-point standard
                     }
-                    if(!map.containsKey(slop)){
+                    if (!map.containsKey(slop)) {
                         map.put(slop, 0);
                     }
-                    map.put(slop, map.get(slop)+1);
+                    map.put(slop, map.get(slop) + 1);
                     res = Math.max(res, map.get(slop));
                 }
             }
         }
-        return res+1;
+        return res + 1;
     }
 
     // ===== Stack ===== //
@@ -421,11 +421,11 @@ public class Main {
 //      Stack is a legacy class, synchronised and slower
 //      ArrayDeque doesn’t allow null. That’s never an issue in DSA.
 
-        for(int i=nums2.length-1;i>=0;i--){
-            if(stack.isEmpty()){
+        for (int i = nums2.length - 1; i >= 0; i--) {
+            if (stack.isEmpty()) {
                 nextGreater[i] = -1;
             } else {
-                while(!stack.isEmpty() && stack.peek()<nums2[i]){
+                while (!stack.isEmpty() && stack.peek() < nums2[i]) {
                     stack.pop();
                 }
                 nextGreater[i] = stack.isEmpty() ? -1 : stack.peek();
@@ -434,7 +434,7 @@ public class Main {
             stack.push(nums2[i]);
         }
 
-        for(int i=0;i<nums1.length;i++){
+        for (int i = 0; i < nums1.length; i++) {
             res[i] = map.get(nums1[i]);
         }
         return res;
@@ -444,25 +444,25 @@ public class Main {
     public boolean isValidParentheses(String s) {
         Deque<Character> stack = new ArrayDeque<>();
 
-        for(int i=0;i<s.length();i++){
+        for (int i = 0; i < s.length(); i++) {
             char curr = s.charAt(i);
-            if(stack.isEmpty()){
+            if (stack.isEmpty()) {
                 stack.push(curr);
             } else {
-                if(curr==')'){
-                    if(stack.peek()=='('){
+                if (curr == ')') {
+                    if (stack.peek() == '(') {
                         stack.pop();
                     } else {
                         return false;
                     }
-                } else if(curr==']'){
-                    if(stack.peek()=='['){
+                } else if (curr == ']') {
+                    if (stack.peek() == '[') {
                         stack.pop();
                     } else {
                         return false;
                     }
-                } else if (curr=='}') {
-                    if(stack.peek()=='{'){
+                } else if (curr == '}') {
+                    if (stack.peek() == '{') {
                         stack.pop();
                     } else {
                         return false;
@@ -605,9 +605,9 @@ public class Main {
         int maxArea = 0;
         int[] heights = new int[matrix[0].length];
 
-        for(int i=0;i<matrix.length;i++){
-            for(int j=0;j<matrix[i].length;j++){
-                if(matrix[i][j]=='1'){
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                if (matrix[i][j] == '1') {
                     heights[j]++;
                 } else {
                     heights[j] = 0;
@@ -718,19 +718,20 @@ public class Main {
         int i = 0;
         int j = k - 1;
 
-        for (int index = 0; index<k; index++) {
-            if (arr[index]<0) {
+        for (int index = 0; index < k; index++) {
+            if (arr[index] < 0) {
                 queue.add(arr[index]);
             }
         }
 
-        while (j<arr.length) {
+        while (j < arr.length) {
             res.add(queue.isEmpty() ? 0 : queue.peek());
             if (!queue.isEmpty() && arr[i] == queue.peek()) {
                 queue.poll();
             }
-            i++; j++;
-            if (j<arr.length && arr[j]<0) {
+            i++;
+            j++;
+            if (j < arr.length && arr[j] < 0) {
                 queue.add(arr[j]);
             }
         }
@@ -743,7 +744,7 @@ public class Main {
         Map<Character, Integer> map1 = new HashMap<>();
         Map<Character, Integer> map2 = new HashMap<>();
 
-        for (int i = 0; i<pat.length(); i++) {
+        for (int i = 0; i < pat.length(); i++) {
             if (!map2.containsKey(pat.charAt(i))) {
                 map2.put(pat.charAt(i), 1);
             } else {
@@ -751,7 +752,7 @@ public class Main {
             }
         }
 
-        for (int i = 0; i<pat.length(); i++) {
+        for (int i = 0; i < pat.length(); i++) {
             if (!map1.containsKey(txt.charAt(i))) {
                 map1.put(txt.charAt(i), 1);
             } else {
@@ -762,7 +763,7 @@ public class Main {
         int i = 0;
         int j = pat.length() - 1;
 
-        while (j<txt.length()) {
+        while (j < txt.length()) {
             if (map1.equals(map2)) {
                 res++;
             }
@@ -772,8 +773,9 @@ public class Main {
                 map1.remove(txt.charAt(i));
             }
 
-            i++; j++;
-            if (j<txt.length()) {
+            i++;
+            j++;
+            if (j < txt.length()) {
                 if (!map1.containsKey(txt.charAt(j))) {
                     map1.put(txt.charAt(j), 1);
                 } else {
@@ -790,16 +792,16 @@ public class Main {
         Map<Character, Integer> map1 = new HashMap<>();
         Map<Character, Integer> map2 = new HashMap<>();
 
-        for (int i = 0; i<pat.length(); i++) {
+        for (int i = 0; i < pat.length(); i++) {
             map2.put(pat.charAt(i), map2.getOrDefault(pat.charAt(i), 0) + 1);
         }
-        for (int i = 0; i<pat.length(); i++) {
+        for (int i = 0; i < pat.length(); i++) {
             map1.put(txt.charAt(i), map1.getOrDefault(txt.charAt(i), 0) + 1);
         }
 
         int i = 0;
         int j = pat.length() - 1;
-        while (j<txt.length()) {
+        while (j < txt.length()) {
             if (map1.equals(map2)) {
                 res++;
             }
@@ -809,8 +811,9 @@ public class Main {
                 map1.remove(txt.charAt(i));
             }
 
-            i++; j++;
-            if (j<txt.length()) {
+            i++;
+            j++;
+            if (j < txt.length()) {
                 map1.put(txt.charAt(j), map1.getOrDefault(txt.charAt(j), 0) + 1);
             }
         }
@@ -870,15 +873,15 @@ public class Main {
         int j = 0;
         Map<Character, Integer> map = new HashMap<>();
 
-        while (j<s.length()) {
-            while (j<s.length() && map.size() <= k) {
+        while (j < s.length()) {
+            while (j < s.length() && map.size() <= k) {
                 map.put(s.charAt(j), map.getOrDefault(s.charAt(j), 0) + 1);
                 j++;
                 if (map.size() == k) {
                     res = Math.max(res, j - i);
                 }
             }
-            while (map.size()>k) {
+            while (map.size() > k) {
                 map.put(s.charAt(i), map.get(s.charAt(i)) - 1);
                 if (map.get(s.charAt(i)) == 0) {
                     map.remove(s.charAt(i));
@@ -887,6 +890,16 @@ public class Main {
             }
         }
         return res;
+    }
+
+    // ===== Recursion ===== //
+
+    // Fibonacci Number
+    public int fib(int n) {
+        if (n == 0 || n == 1) {
+            return n;
+        }
+        return fib(n - 1) + fib(n - 2);
     }
 
     public static void main(String[] args) throws IOException {
@@ -912,8 +925,13 @@ public class Main {
             return st.nextToken();
         }
 
-        int nextInt() throws IOException { return Integer.parseInt(next()); }
-        long nextLong() throws IOException { return Long.parseLong(next()); }
+        int nextInt() throws IOException {
+            return Integer.parseInt(next());
+        }
+
+        long nextLong() throws IOException {
+            return Long.parseLong(next());
+        }
 
         int[] nextIntArray(int n) throws IOException {
             int[] arr = new int[n];
