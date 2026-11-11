@@ -1,1 +1,1 @@
-<img width="471" height="308" alt="image" src="https://github.com/user-attachments/assets/b03b8bd4-df8a-4aa9-b093-62255ec62287" />
+<img width="1672" height="941" alt="Defiant Tech Conference Meme" src="https://github.com/user-attachments/assets/6c1e16d2-9088-47e1-adad-469c8d7937b3" />
