@@ -88,10 +88,7 @@ public class Main {
         while (left <= right) {
             int mid = left + (right - left) / 2;
             // Lesser than both it's left & right
-            if (
-                    (mid - 1 >= 0 && mid + 1 <= arr.length - 1 && arr[mid] < arr[mid - 1] && arr[mid] < arr[mid + 1]) ||
-                            (mid == arr.length - 1 && arr[mid] < arr[mid - 1] && arr[mid] < arr[0])
-            ) {
+            if ((mid - 1 >= 0 && mid + 1 <= arr.length - 1 && arr[mid] < arr[mid - 1] && arr[mid] < arr[mid + 1]) || (mid == arr.length - 1 && arr[mid] < arr[mid - 1] && arr[mid] < arr[0])) {
                 ans = mid;
                 break;
             } else if (arr[0] > arr[arr.length - 1] && arr[mid] < arr[0]) {
@@ -913,6 +910,20 @@ public class Main {
         s[i] = s[j];
         s[j] = temp;
         reverseString(s, i + 1, j - 1);
+    }
+
+    // Pow(x, n)
+    public double myPow(double x, int n) {
+        double temp = myPowHelper(x, Math.abs(n));
+        return n < 0 ? (1 / temp) : temp;
+    }
+
+    private double myPowHelper(double x, int n) {
+        if (n == 0) {
+            return 1;
+        }
+        double myPowHelper = myPowHelper(x, n / 2);
+        return n % 2 == 0 ? (myPowHelper * myPowHelper) : (x * myPowHelper * myPowHelper);
     }
 
     public static void main(String[] args) throws IOException {
