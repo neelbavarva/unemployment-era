@@ -902,6 +902,19 @@ public class Main {
         return fib(n - 1) + fib(n - 2);
     }
 
+    // Reverse String
+    public void reverseString(char[] s) {
+        reverseString(s, 0, s.length - 1);
+    }
+
+    private void reverseString(char[] s, int i, int j) {
+        if (i >= j) return;
+        char temp = s[i];
+        s[i] = s[j];
+        s[j] = temp;
+        reverseString(s, i + 1, j - 1);
+    }
+
     public static void main(String[] args) throws IOException {
         FastReader in = new FastReader();
         PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out)));
