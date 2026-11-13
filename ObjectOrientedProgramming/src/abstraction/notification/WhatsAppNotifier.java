@@ -1,8 +1,13 @@
 package abstraction.notification;
 
-public class WhatsAppNotifier implements Notifier {
+public class WhatsAppNotifier extends BaseNotifier {
     @Override
-    public void send(String recipient, String message) {
-        System.out.println("WhatsApp - " + recipient + " : " + message);
+    protected String loadTemplate(String message) {
+        return "WhatsApp : " + message;
+    }
+
+    @Override
+    protected void deliver(String recipient, String formattedMessage) {
+        System.out.println(formattedMessage + " delivered to " + recipient + " using Push Notify");
     }
 }

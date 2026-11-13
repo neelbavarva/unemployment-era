@@ -1,8 +1,13 @@
 package abstraction.notification;
 
-public class SmsNotifier implements Notifier {
+public class SmsNotifier extends BaseNotifier {
     @Override
-    public void send(String recipient, String message) {
-        System.out.println("SMS - " + recipient + " : " + message);
+    protected String loadTemplate(String message) {
+        return "Sms : " + message;
+    }
+
+    @Override
+    protected void deliver(String recipient, String formattedMessage) {
+        System.out.println(formattedMessage + " delivered to " + recipient + " using ACN");
     }
 }

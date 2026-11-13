@@ -1,8 +1,13 @@
 package abstraction.notification;
 
-public class EmailNotifier implements Notifier {
+public class EmailNotifier extends BaseNotifier {
     @Override
-    public void send(String recipient, String message) {
-        System.out.println("Email - " + recipient + " : " + message);
+    protected String loadTemplate(String message) {
+        return "Email : " + message;
+    }
+
+    @Override
+    protected void deliver(String recipient, String formattedMessage) {
+        System.out.println(formattedMessage + " delivered to " + recipient + " using SMTP");
     }
 }

@@ -1,8 +1,13 @@
 package abstraction.notification;
 
-public class WebhookNotifier implements Notifier {
+public class WebhookNotifier extends BaseNotifier {
     @Override
-    public void send(String recipient, String message) {
-        System.out.println("Webhook - " + recipient + " : " + message);
+    protected String loadTemplate(String message) {
+        return "Webhook : " + message;
+    }
+
+    @Override
+    protected void deliver(String recipient, String formattedMessage) {
+        System.out.println(formattedMessage + " delivered to " + recipient + " using Webhook");
     }
 }
