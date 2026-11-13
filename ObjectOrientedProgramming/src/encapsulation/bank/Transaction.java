@@ -1,4 +1,4 @@
-package bank;
+package encapsulation.bank;
 
 import java.time.Instant;
 
