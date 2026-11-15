@@ -397,4 +397,138 @@ public class DynamicProgramming {
         }
         return ((target + total) % 2 == 0 && Math.abs(target) <= total) ? perfectSumDP(nums, (total + target) / 2) : 0;
     }
+
+    // Unbounded Knapsack
+    public int knapSack(int val[], int wt[], int capacity) {
+        dpInt2 = new int[val.length + 1][capacity + 1];
+        fill(dpInt2, -1);
+        return knapSackMemoized(val, wt, capacity, 0);
+    }
+
+    public int knapSackMemoized(int val[], int wt[], int capacity, int i) {
+        if (i == val.length) {
+            return 0;
+        }
+
+        if (dpInt2[i][capacity] != -1) {
+            return dpInt2[i][capacity];
+        }
+
+        if (capacity >= wt[i]) {
+            return dpInt2[i][capacity] = Math.max(knapSackMemoized(val, wt, capacity, i + 1), val[i] + knapSackMemoized(val, wt, capacity - wt[i], i));
+        } else {
+            return dpInt2[i][capacity] = knapSackMemoized(val, wt, capacity, i + 1);
+        }
+    }
+
+    public int knapSackDP(int val[], int wt[], int capacity) {
+        dpInt2 = new int[val.length + 1][capacity + 1];
+
+        for (int i = val.length - 1; i >= 0; i--) {
+            for (int j = 0; j <= capacity; j++) {
+                if (j >= wt[i]) {
+                    dpInt2[i][j] = Math.max(val[i] + dpInt2[i][j - wt[i]], dpInt2[i + 1][j]);
+                } else {
+                    dpInt2[i][j] = dpInt2[i + 1][j];
+                }
+            }
+        }
+
+        return dpInt2[0][capacity];
+    }
+
+    // Coin Change
+    public int coinChange(int[] coins, int amount) {
+        dpInt2 = new int[coins.length + 1][amount + 1];
+        fill(dpInt2, -1);
+        int ans = coinChangeMemoized(coins, amount, 0);
+        return ans >= Integer.MAX_VALUE / 2 ? -1 : ans;
+    }
+
+    public int coinChangeMemoized(int[] coins, int amount, int i) {
+        if (i == coins.length) {
+            if (amount == 0) {
+                return 0;
+            } else {
+                return Integer.MAX_VALUE / 2;
+            }
+        }
+
+        if (dpInt2[i][amount] != -1) {
+            return dpInt2[i][amount];
+        }
+
+        if (amount >= coins[i]) {
+            return dpInt2[i][amount] = Math.min(coinChangeMemoized(coins, amount, i + 1), 1 + coinChangeMemoized(coins, amount - coins[i], i));
+        } else {
+            return dpInt2[i][amount] = coinChangeMemoized(coins, amount, i + 1);
+        }
+    }
+
+    public int coinChangeDP(int[] coins, int amount) {
+        dpInt2 = new int[coins.length + 1][amount + 1];
+
+        for (int i = 0; i < dpInt2.length; i++) {
+            for (int j = 0; j < dpInt2[0].length; j++) {
+                dpInt2[coins.length][j] = Integer.MAX_VALUE / 2;
+            }
+        }
+
+        dpInt2[coins.length][0] = 0;
+
+        for (int i = coins.length - 1; i >= 0; i--) {
+            for (int j = 0; j <= amount; j++) {
+                if (j >= coins[i]) {
+                    dpInt2[i][j] = Math.min(1 + dpInt2[i][j - coins[i]], dpInt2[i + 1][j]);
+                } else {
+                    dpInt2[i][j] = dpInt2[i + 1][j];
+                }
+            }
+        }
+
+        return dpInt2[0][amount] >= Integer.MAX_VALUE / 2 ? -1 : dpInt2[0][amount];
+    }
+
+    public int coinChangeII(int amount, int[] coins) {
+        dpInt2 = new int[coins.length + 1][amount + 1];
+        fill(dpInt2, -1);
+        return coinChangeIIMemoized(amount, coins, 0);
+    }
+
+    public int coinChangeIIMemoized(int amount, int[] coins, int i) {
+        if (i == coins.length) {
+            if (amount == 0) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+
+        if (dpInt2[i][amount] != -1) {
+            return dpInt2[i][amount];
+        }
+
+        if (amount >= coins[i]) {
+            return dpInt2[i][amount] = coinChangeIIMemoized(amount, coins, i + 1) + coinChangeIIMemoized(amount - coins[i], coins, i);
+        } else {
+            return dpInt2[i][amount] = coinChangeIIMemoized(amount, coins, i + 1);
+        }
+    }
+
+    public int coinChangeIIDP(int amount, int[] coins) {
+        dpInt2 = new int[coins.length + 1][amount + 1];
+        dpInt2[coins.length][0] = 1;
+
+        for (int i = coins.length - 1; i >= 0; i--) {
+            for (int j = 0; j <= amount; j++) {
+                if (j >= coins[i]) {
+                    dpInt2[i][j] = dpInt2[i][j - coins[i]] + dpInt2[i + 1][j];
+                } else {
+                    dpInt2[i][j] = dpInt2[i + 1][j];
+                }
+            }
+        }
+
+        return dpInt2[0][amount];
+    }
 }
