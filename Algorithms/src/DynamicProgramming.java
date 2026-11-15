@@ -11,7 +11,7 @@ public class DynamicProgramming {
     //  Step 4: the loop direction for each dimension
 
     //  The call moves…	So loop…
-    //  f(i + 1, …) (index goes up)	i from high to low
+    //  f(i + 1, …) (index goes up)	    i from high to low
     //  f(i - 1, …) (index goes down)	i from low to high
     //  f(…, j - something) (shrinks)	j from low to high
 
@@ -19,7 +19,6 @@ public class DynamicProgramming {
 
     // ===== Shared memo tables ===== //
 
-    // int / long: fill with -1 to mean "not computed yet".
     private int[] dpInt1;
     private int[][] dpInt2;
     private int[][][] dpInt3;
@@ -28,12 +27,10 @@ public class DynamicProgramming {
     private long[][] dpLong2;
     private long[][][] dpLong3;
 
-    // Boolean (wrapper, not primitive): null = "not computed yet"
     private Boolean[] dpBoolean1;
     private Boolean[][] dpBoolean2;
     private Boolean[][][] dpBoolean3;
 
-    // boolean (primitive): for bottom-up tables, default = false, no null needed
     private boolean[] dpboolean1;
     private boolean[][] dpboolean2;
     private boolean[][][] dpboolean3;
@@ -277,4 +274,63 @@ public class DynamicProgramming {
 
         return dpboolean2[0][sum];
     }
+
+    // Partition Equal Subset Sum
+    public boolean canPartition(int[] nums) {
+        int total = 0;
+        for (int i = 0; i < nums.length; i++) {
+            total += nums[i];
+        }
+
+        if (total % 2 == 1) {
+            return false;
+        }
+
+        return isSubsetSum(nums, total / 2);
+    }
+
+    // Count of Subsets with Given Sum
+    public int perfectSum(int[] arr, int target) {
+        dpInt2 = new int[arr.length + 1][target + 1];
+        fill(dpInt2, -1);
+        return perfectSumMemoized(arr, target, 0);
+    }
+
+    public int perfectSumMemoized(int[] arr, int target, int i) {
+        if (target == 0 && i == arr.length) {
+            return 1;
+        }
+
+        if (i >= arr.length) {
+            return 0;
+        }
+
+        if (dpInt2[i][target] != -1) {
+            return dpInt2[i][target];
+        }
+
+        if (target >= arr[i]) {
+            return dpInt2[i][target] = perfectSumMemoized(arr, target - arr[i], i + 1) + perfectSumMemoized(arr, target, i + 1);
+        } else {
+            return dpInt2[i][target] = perfectSumMemoized(arr, target, i + 1);
+        }
+    }
+
+    public int perfectSumDP(int[] arr, int target) {
+        dpInt2 = new int[arr.length + 1][target + 1];
+        dpInt2[arr.length][0] = 1;
+
+        for (int i = arr.length - 1; i >= 0; i--) {
+            for (int j = 0; j < dpInt2[0].length; j++) {
+                if (j >= arr[i]) {
+                    dpInt2[i][j] = dpInt2[i + 1][j] + dpInt2[i + 1][j - arr[i]];
+                } else {
+                    dpInt2[i][j] = dpInt2[i + 1][j];
+                }
+            }
+        }
+
+        return dpInt2[0][target];
+    }
+
 }
