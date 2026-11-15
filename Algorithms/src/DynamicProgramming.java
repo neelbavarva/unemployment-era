@@ -333,4 +333,68 @@ public class DynamicProgramming {
         return dpInt2[0][target];
     }
 
+    // Minimum Subset Sum Difference
+    public int minDifference(int arr[]) {
+        int total = 0;
+        for (int i = 0; i < arr.length; i++) {
+            total += arr[i];
+        }
+        dpInt2 = new int[arr.length + 1][total + 1];
+        fill(dpInt2, -1);
+        return minDifferenceMemoized(arr, 0, total, 0);
+    }
+
+    public int minDifferenceMemoized(int arr[], int taken, int total, int i) {
+        if (i == arr.length) {
+            return Math.abs(2 * taken - total);
+        }
+
+        if (dpInt2[i][taken] != -1) {
+            return dpInt2[i][taken];
+        }
+
+        return dpInt2[i][taken] = Math.min(minDifferenceMemoized(arr, taken, total, i + 1), minDifferenceMemoized(arr, taken + arr[i], total, i + 1));
+    }
+
+    public int minDifferenceDP(int arr[]) {
+        int total = 0;
+        for (int i = 0; i < arr.length; i++) {
+            total += arr[i];
+        }
+
+        dpboolean2 = new boolean[arr.length + 1][total + 1];
+        for (int i = 0; i < dpboolean2.length; i++) {
+            for (int j = 0; j < dpboolean2[0].length; j++) {
+                dpboolean2[0][j] = false;
+                dpboolean2[i][0] = true;
+            }
+        }
+
+        for (int i = arr.length - 1; i >= 0; i--) {
+            for (int j = 1; j <= total; j++) {
+                if (j >= arr[i]) {
+                    dpboolean2[i][j] = dpboolean2[i + 1][j] || dpboolean2[i + 1][j - arr[i]];
+                } else {
+                    dpboolean2[i][j] = dpboolean2[i + 1][j];
+                }
+            }
+        }
+
+        int min = Integer.MAX_VALUE;
+        for (int i = 0; i <= total; i++) {
+            if (dpboolean2[0][i]) {
+                min = Math.min(min, Math.abs(total - 2 * i));
+            }
+        }
+        return min;
+    }
+
+    // Target Sum
+    public int findTargetSumWays(int[] nums, int target) {
+        int total = 0;
+        for (int i = 0; i < nums.length; i++) {
+            total += nums[i];
+        }
+        return ((target + total) % 2 == 0 && Math.abs(target) <= total) ? perfectSumDP(nums, (total + target) / 2) : 0;
+    }
 }
