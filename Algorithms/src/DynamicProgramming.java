@@ -2,7 +2,22 @@ import java.util.Arrays;
 
 public class DynamicProgramming {
 
-    // ===== Shared memo tables =====
+    // ============ Notes ============ //
+
+    //  Step 1: dimensions = changing parameters
+    //  Step 2: write the definition line, always
+    //  dp[i][j] = <exactly what f(i, j) returns, in words>
+    //  Step 3: base cases become pre-filled cells
+    //  Step 4: the loop direction for each dimension
+
+    //  The call moves…	So loop…
+    //  f(i + 1, …) (index goes up)	i from high to low
+    //  f(i - 1, …) (index goes down)	i from low to high
+    //  f(…, j - something) (shrinks)	j from low to high
+
+    //  Step 5: the loop body is the memo’s return line
+
+    // ===== Shared memo tables ===== //
 
     // int / long: fill with -1 to mean "not computed yet".
     private int[] dp1;
@@ -146,5 +161,51 @@ public class DynamicProgramming {
         }
         int ans2 = dp[0];
         return Math.max(ans1, ans2);
+    }
+
+    // 0 - 1 Knapsack Problem
+    public int knapsack(int W, int val[], int wt[]) {
+        dp2 = new int[val.length + 1][W + 1];
+        fill(dp2, -1);
+        return knapsackMemoized(W, val, wt, 0);
+    }
+
+    public int knapsackMemoized(int W, int val[], int wt[], int i) {
+        if (i >= val.length) {
+            return 0;
+        }
+        if (W == 0) {
+            return 0;
+        }
+
+        if (dp2[i][W] != -1) {
+            return dp2[i][W];
+        }
+
+        if (W >= wt[i]) {
+            return dp2[i][W] = Math.max(val[i] + knapsackMemoized(W - wt[i], val, wt, i + 1), knapsackMemoized(W, val, wt, i + 1));
+        } else {
+            return dp2[i][W] = knapsackMemoized(W, val, wt, i + 1);
+        }
+    }
+
+    public int knapsackDP(int W, int val[], int wt[]) {
+        dp2 = new int[val.length + 1][W + 1];
+
+        for (int i = 0; i < dp2.length; i++) {
+            dp2[i][0] = 0;
+        }
+
+        for (int i = val.length - 1; i >= 0; i--) {
+            for (int j = 1; j <= W; j++) {
+                if (j >= wt[i]) {
+                    dp2[i][j] = Math.max(dp2[i + 1][j], val[i] + dp2[i + 1][j - wt[i]]);
+                } else {
+                    dp2[i][j] = dp2[i + 1][j];
+                }
+            }
+        }
+
+        return dp2[0][W];
     }
 }
