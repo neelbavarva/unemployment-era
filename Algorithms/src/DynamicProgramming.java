@@ -532,4 +532,103 @@ public class DynamicProgramming {
 
         return dpInt2[0][amount];
     }
+
+    // Longest Common Subsequence
+    public int longestCommonSubsequence(String text1, String text2) {
+        dpInt2 = new int[text1.length() + 1][text2.length() + 1];
+        fill(dpInt2, -1);
+        return longestCommonSubsequenceMemoized(text1, text2, 0, 0);
+    }
+
+    public int longestCommonSubsequenceMemoized(String text1, String text2, int i, int j) {
+        if (i == text1.length() || j == text2.length()) {
+            return 0;
+        }
+
+        if (dpInt2[i][j] != -1) {
+            return dpInt2[i][j];
+        }
+
+        if (text1.charAt(i) == text2.charAt(j)) {
+            return dpInt2[i][j] = 1 + longestCommonSubsequenceMemoized(text1, text2, i + 1, j + 1);
+        } else {
+            return dpInt2[i][j] = Math.max(longestCommonSubsequenceMemoized(text1, text2, i + 1, j), longestCommonSubsequenceMemoized(text1, text2, i, j + 1));
+        }
+    }
+
+    public int longestCommonSubsequenceDP(String text1, String text2) {
+        dpInt2 = new int[text1.length() + 1][text2.length() + 1];
+
+        for (int i = 0; i <= text1.length(); i++) {
+            for (int j = 0; j <= text2.length(); j++) {
+                if (i == text1.length() || j == text2.length()) {
+                    dpInt2[i][j] = 0;
+                }
+            }
+        }
+
+        for (int i = text1.length() - 1; i >= 0; i--) {
+            for (int j = text2.length() - 1; j >= 0; j--) {
+                if (text1.charAt(i) == text2.charAt(j)) {
+                    dpInt2[i][j] = 1 + dpInt2[i + 1][j + 1];
+                } else {
+                    dpInt2[i][j] = Math.max(dpInt2[i + 1][j], dpInt2[i][j + 1]);
+                }
+            }
+        }
+
+        return dpInt2[0][0];
+    }
+
+    // Longest Common Substring
+    public int longCommSubstr(String s1, String s2) {
+        int max = 0;
+        dpInt2 = new int[s1.length() + 1][s2.length() + 1];
+        fill(dpInt2, -1);
+        for (int i = 0; i < s1.length(); i++) {
+            for (int j = 0; j < s2.length(); j++) {
+                max = Math.max(max, longCommSubstrMemoized(s1, s2, i, j));
+            }
+        }
+        return max;
+    }
+
+    public int longCommSubstrMemoized(String s1, String s2, int i, int j) {
+        if (i == s1.length() || j == s2.length()) {
+            return 0;
+        }
+
+        if (dpInt2[i][j] != -1) {
+            return dpInt2[i][j];
+        }
+
+        if (s1.charAt(i) != s2.charAt(j)) {
+            return dpInt2[i][j] = 0;
+        }
+        return dpInt2[i][j] = 1 + longCommSubstrMemoized(s1, s2, i + 1, j + 1);
+    }
+
+    public int longCommSubstrDP(String s1, String s2) {
+        int max = 0;
+        dpInt2 = new int[s1.length() + 1][s2.length() + 1];
+
+        for (int i = s1.length() - 1; i >= 0; i--) {
+            for (int j = s2.length() - 1; j >= 0; j--) {
+                if (s1.charAt(i) == s2.charAt(j)) {
+                    dpInt2[i][j] = 1 + dpInt2[i + 1][j + 1];
+                } else {
+                    dpInt2[i][j] = 0;
+                }
+            }
+        }
+
+        for (int i = s1.length() - 1; i >= 0; i--) {
+            for (int j = s2.length() - 1; j >= 0; j--) {
+                max = Math.max(max, dpInt2[i][j]);
+            }
+        }
+
+        return max;
+    }
+
 }
