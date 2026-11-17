@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.*;
 
 public class DynamicProgramming {
 
@@ -630,5 +630,34 @@ public class DynamicProgramming {
 
         return max;
     }
+
+//    // Print All Longest Common Subsequence
+//    public ArrayList<String> allLCS(String s1, String s2) {
+//        ArrayList<String> arrayList = new ArrayList<>();
+//
+//        return arrayList;
+//    }
+
+    // Minimum Insertions/Deletions to Convert String a to b
+    public int minDistance(String word1, String word2) {
+        int lcs = longestCommonSubsequenceDP(word1, word2);
+        return Math.abs(word1.length() + word2.length() - (2 * lcs));
+    }
+
+    // Longest Palindromic Subsequence
+    public int longestPalindromeSubseq(String s) {
+        return longestCommonSubsequenceDP(s, new StringBuilder(s).reverse().toString());
+    }
+
+    // Minimum Deletions to Make a String Palindrome
+    public int minInsertions(String s) {
+        return s.length() - longestCommonSubsequenceDP(s, new StringBuilder(s).reverse().toString());
+    }
+
+    // Longest Repeating Subsequence
+//    public int longestRepSubseq(String s) {
+//        // code here
+//
+//    }
 
 }
