@@ -655,9 +655,93 @@ public class DynamicProgramming {
     }
 
     // Longest Repeating Subsequence
-//    public int longestRepSubseq(String s) {
-//        // code here
-//
-//    }
+    public int longestRepSubseq(String s) {
+        String text1 = s;
+        String text2 = s;
+
+        dpInt2 = new int[text1.length() + 1][text2.length() + 1];
+
+        for (int i = 0; i <= text1.length(); i++) {
+            for (int j = 0; j <= text2.length(); j++) {
+                if (i == text1.length() || j == text2.length()) {
+                    dpInt2[i][j] = 0;
+                }
+            }
+        }
+
+        for (int i = text1.length() - 1; i >= 0; i--) {
+            for (int j = text2.length() - 1; j >= 0; j--) {
+                if (text1.charAt(i) == text2.charAt(j) && i != j) {
+                    dpInt2[i][j] = 1 + dpInt2[i + 1][j + 1];
+                } else {
+                    dpInt2[i][j] = Math.max(dpInt2[i + 1][j], dpInt2[i][j + 1]);
+                }
+            }
+        }
+
+        return dpInt2[0][0];
+    }
+
+    // Shortest Common Supersequence
+    public int minSuperSeq(String s1, String s2) {
+        return (s1.length() + s2.length() - longestCommonSubsequenceDP(s1, s2));
+    }
+
+    // Edit Distance
+    public int editDistance(String word1, String word2) {
+        dpInt2 = new int[word1.length() + 1][word2.length() + 1];
+        fill(dpInt2, -1);
+        return editDistanceMemoized(word1, word2, 0, 0);
+    }
+
+    public int editDistanceMemoized(String word1, String word2, int i, int j) {
+        if (i == word1.length()) {
+            return Math.abs(word2.length() - j);
+        }
+
+        if (j == word2.length()) {
+            return Math.abs(word1.length() - i);
+        }
+
+        if (dpInt2[i][j] != -1) {
+            return dpInt2[i][j];
+        }
+
+        if (word1.charAt(i) == word2.charAt(j)) {
+            return dpInt2[i][j] = editDistanceMemoized(word1, word2, i + 1, j + 1);
+        } else {
+            return dpInt2[i][j] = 1 + Math.min(editDistanceMemoized(word1, word2, i + 1, j), Math.min(editDistanceMemoized(word1, word2, i, j + 1), editDistanceMemoized(word1, word2, i + 1, j + 1)));
+
+        }
+    }
+
+    public int editDistanceDP(String word1, String word2) {
+        dpInt2 = new int[word1.length() + 1][word2.length() + 1];
+
+        for (int i = 0; i <= word1.length(); i++) {
+            for (int j = 0; j <= word2.length(); j++) {
+                if (i == word1.length()) {
+                    dpInt2[i][j] = Math.abs(word2.length() - j);
+                }
+
+                if (j == word2.length()) {
+                    dpInt2[i][j] = Math.abs(word1.length() - i);
+                }
+            }
+        }
+
+        for (int i = word1.length() - 1; i >= 0; i--) {
+            for (int j = word2.length() - 1; j >= 0; j--) {
+                if (word1.charAt(i) == word2.charAt(j)) {
+                    dpInt2[i][j] = dpInt2[i + 1][j + 1];
+                } else {
+                    dpInt2[i][j] = 1 + Math.min(dpInt2[i + 1][j], Math.min(dpInt2[i][j + 1], dpInt2[i + 1][j + 1]));
+
+                }
+            }
+        }
+
+        return dpInt2[0][0];
+    }
 
 }
