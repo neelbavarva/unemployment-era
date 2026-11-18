@@ -659,7 +659,7 @@ public class DynamicProgramming {
         return text1.substring(index, index + max);
     }
 
-    // Print All Longest Common Substring
+    // Print All Longest Common Substrings
     public ArrayList<String> printAllLongestCommonSubstring(String text1, String text2) {
         ArrayList<String> arrayList = new ArrayList<>();
         Set<String> stringSet = new HashSet<>();
@@ -699,14 +699,48 @@ public class DynamicProgramming {
 
     // Print Longest Common Subsequence
     public String printLongestCommonSubsequence(String text1, String text2) {
+        dpInt2 = new int[text1.length() + 1][text2.length() + 1];
 
-        return "";
+        for (int i = 0; i <= text1.length(); i++) {
+            for (int j = 0; j <= text2.length(); j++) {
+                if (i == text1.length() || j == text2.length()) {
+                    dpInt2[i][j] = 0;
+                }
+            }
+        }
+
+        for (int i = text1.length() - 1; i >= 0; i--) {
+            for (int j = text2.length() - 1; j >= 0; j--) {
+                if (text1.charAt(i) == text2.charAt(j)) {
+                    dpInt2[i][j] = 1 + dpInt2[i + 1][j + 1];
+                } else {
+                    dpInt2[i][j] = Math.max(dpInt2[i + 1][j], dpInt2[i][j + 1]);
+                }
+            }
+        }
+
+        String ans = "";
+        int i = 0;
+        int j = 0;
+        while (i < text1.length() && j < text2.length()) {
+            if (text1.charAt(i) == text2.charAt(j)) { // move diagonally
+                ans += text1.charAt(i);
+                i++;
+                j++;
+            } else if (dpInt2[i + 1][j] >= dpInt2[i][j + 1]) { // down holds the bigger answer
+                i++;
+            } else { // right holds the bigger answer
+                j++;
+            }
+        }
+
+        return ans;
     }
 
-    // Print All Longest Common Subsequence
-    public ArrayList<String> printAllLongestCommonSubsequence(String s1, String s2) {
+    // Print All Longest Common Subsequences
+    public ArrayList<String> printAllLongestCommonSubsequence(String text1, String text2) {
         ArrayList<String> arrayList = new ArrayList<>();
-
+        // DP + Backtracking
         return arrayList;
     }
 
