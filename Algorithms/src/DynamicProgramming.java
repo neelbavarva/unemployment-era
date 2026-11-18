@@ -631,12 +631,84 @@ public class DynamicProgramming {
         return max;
     }
 
-//    // Print All Longest Common Subsequence
-//    public ArrayList<String> allLCS(String s1, String s2) {
-//        ArrayList<String> arrayList = new ArrayList<>();
-//
-//        return arrayList;
-//    }
+    // Print Longest Common Substring
+    public String printLongestCommonSubstring(String text1, String text2) {
+        dpInt2 = new int[text1.length() + 1][text2.length() + 1];
+
+        for (int i = text1.length() - 1; i >= 0; i--) {
+            for (int j = text2.length() - 1; j >= 0; j--) {
+                if (text1.charAt(i) == text2.charAt(j)) {
+                    dpInt2[i][j] = 1 + dpInt2[i + 1][j + 1];
+                } else {
+                    dpInt2[i][j] = 0;
+                }
+            }
+        }
+
+        int max = 0;
+        int index = 0;
+        for (int i = text1.length() - 1; i >= 0; i--) {
+            for (int j = text2.length() - 1; j >= 0; j--) {
+                if (dpInt2[i][j] > max) {
+                    max = dpInt2[i][j];
+                    index = i;
+                }
+            }
+        }
+
+        return text1.substring(index, index + max);
+    }
+
+    // Print All Longest Common Substring
+    public ArrayList<String> printAllLongestCommonSubstring(String text1, String text2) {
+        ArrayList<String> arrayList = new ArrayList<>();
+        Set<String> stringSet = new HashSet<>();
+
+        dpInt2 = new int[text1.length() + 1][text2.length() + 1];
+
+        for (int i = text1.length() - 1; i >= 0; i--) {
+            for (int j = text2.length() - 1; j >= 0; j--) {
+                if (text1.charAt(i) == text2.charAt(j)) {
+                    dpInt2[i][j] = 1 + dpInt2[i + 1][j + 1];
+                } else {
+                    dpInt2[i][j] = 0;
+                }
+            }
+        }
+
+        int max = 0;
+        for (int i = text1.length() - 1; i >= 0; i--) {
+            for (int j = text2.length() - 1; j >= 0; j--) {
+                max = Math.max(max, dpInt2[i][j]);
+            }
+        }
+
+        for (int i = text1.length() - 1; i >= 0; i--) {
+            for (int j = text2.length() - 1; j >= 0; j--) {
+                if (dpInt2[i][j] == max && max != 0) {
+                    if (!stringSet.contains(text1.substring(i, i + max))) {
+                        arrayList.add(text1.substring(i, i + max));
+                        stringSet.add(text1.substring(i, i + max));
+                    }
+                }
+            }
+        }
+
+        return arrayList;
+    }
+
+    // Print Longest Common Subsequence
+    public String printLongestCommonSubsequence(String text1, String text2) {
+
+        return "";
+    }
+
+    // Print All Longest Common Subsequence
+    public ArrayList<String> printAllLongestCommonSubsequence(String s1, String s2) {
+        ArrayList<String> arrayList = new ArrayList<>();
+
+        return arrayList;
+    }
 
     // Minimum Insertions/Deletions to Convert String a to b
     public int minDistance(String word1, String word2) {
