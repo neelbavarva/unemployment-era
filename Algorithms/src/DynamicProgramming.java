@@ -744,6 +744,98 @@ public class DynamicProgramming {
         return arrayList;
     }
 
+    // Print Shortest Common Supersequence
+    public String shortestCommonSupersequence(String text1, String text2) {
+        dpInt2 = new int[text1.length() + 1][text2.length() + 1];
+
+        for (int i = 0; i <= text1.length(); i++) {
+            for (int j = 0; j <= text2.length(); j++) {
+                if (i == text1.length() || j == text2.length()) {
+                    dpInt2[i][j] = 0;
+                }
+            }
+        }
+
+        for (int i = text1.length() - 1; i >= 0; i--) {
+            for (int j = text2.length() - 1; j >= 0; j--) {
+                if (text1.charAt(i) == text2.charAt(j)) {
+                    dpInt2[i][j] = 1 + dpInt2[i + 1][j + 1];
+                } else {
+                    dpInt2[i][j] = Math.max(dpInt2[i + 1][j], dpInt2[i][j + 1]);
+                }
+            }
+        }
+
+        int i = 0;
+        int j = 0;
+        String ans = "";
+        while (i < text1.length() && j < text2.length()) {
+            if (text1.charAt(i) == text2.charAt(j)) { // move diagonally
+                ans += text1.charAt(i);
+                i++;
+                j++;
+            } else if (dpInt2[i + 1][j] >= dpInt2[i][j + 1]) { // down holds the bigger answer
+                ans += text1.charAt(i);
+                i++;
+            } else { // right holds the bigger answer
+                ans += text2.charAt(j);
+                j++;
+            }
+        }
+
+        while (i < text1.length()) {
+            ans += text1.charAt(i++);
+        }
+
+        while (j < text2.length()) {
+            ans += text2.charAt(j++);
+        }
+
+        return ans;
+    }
+
+    // Interleaving String
+    public boolean isInterleave(String s1, String s2, String s3) {
+        dpBoolean2 = new Boolean[s1.length() + 1][s2.length() + 1];
+        return (s1.length() + s2.length() == s3.length()) && isInterleaveMemoized(s1, s2, s3, 0, 0);
+    }
+
+    public boolean isInterleaveMemoized(String s1, String s2, String s3, int i, int j) {
+        if (i >= s1.length() && j >= s2.length()) {
+            return true;
+        }
+
+        if (dpBoolean2[i][j] != null) {
+            return dpBoolean2[i][j];
+        }
+
+        boolean A = i < s1.length() && s1.charAt(i) == s3.charAt(i + j) && isInterleaveMemoized(s1, s2, s3, i + 1, j);
+        boolean B = j < s2.length() && s2.charAt(j) == s3.charAt(i + j) && isInterleaveMemoized(s1, s2, s3, i, j + 1);
+
+        return dpBoolean2[i][j] = A || B;
+    }
+
+    // TODO
+    public boolean isInterleaveDP(String s1, String s2, String s3) {
+        int n = s1.length(), m = s2.length();
+        if (n + m != s3.length()) return false;
+
+        // dp[i][j] = can s1[i..] and s2[j..] interleave to form s3[i+j..]
+        dpboolean2 = new boolean[n + 1][m + 1];
+        dpboolean2[n][m] = true;                       // both used up = success
+
+        for (int i = n; i >= 0; i--) {                 // start AT n, not n-1
+            for (int j = m; j >= 0; j--) {             // start AT m, not m-1
+                if (i == n && j == m) continue;        // base cell, already set
+
+                boolean A = i < n && s1.charAt(i) == s3.charAt(i + j) && dpboolean2[i + 1][j];
+                boolean B = j < m && s2.charAt(j) == s3.charAt(i + j) && dpboolean2[i][j + 1];
+                dpboolean2[i][j] = A || B;
+            }
+        }
+        return dpboolean2[0][0];
+    }
+
     // Minimum Insertions/Deletions to Convert String a to b
     public int minDistance(String word1, String word2) {
         int lcs = longestCommonSubsequenceDP(word1, word2);
