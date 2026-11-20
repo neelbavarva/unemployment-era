@@ -50,4 +50,8 @@ public class Tree {
         return p.val == q.val && isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
     }
 
+    // Symmetric Tree
+    public boolean isSymmetric(TreeNode root) {
+        return isSameTree(root.left, invertTree(root.right));
+    }
 }
