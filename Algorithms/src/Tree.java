@@ -54,4 +54,38 @@ public class Tree {
     public boolean isSymmetric(TreeNode root) {
         return isSameTree(root.left, invertTree(root.right));
     }
+
+    // Balanced Binary Tree
+    private boolean isBalancedGlobal;
+
+    public boolean isBalanced(TreeNode root) {
+        isBalancedGlobal = true;
+        isBalancedN(root, 0);
+        return isBalancedGlobal;
+    }
+
+    private boolean isBalancedN2(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+
+        int leftDepth = maxDepth(root.left);
+        int rightDepth = maxDepth(root.right);
+
+        return Math.abs(leftDepth - rightDepth) <= 1 && isBalancedN2(root.left) && isBalancedN2(root.right);
+    }
+
+    private int isBalancedN(TreeNode root, int level) {
+        if (root == null) {
+            return level;
+        }
+
+        int left = isBalancedN(root.left, level + 1);
+        int right = isBalancedN(root.right, level + 1);
+        if (Math.abs(right - left) > 1) {
+            isBalancedGlobal = false;
+        }
+
+        return Math.max(left, right);
+    }
 }
